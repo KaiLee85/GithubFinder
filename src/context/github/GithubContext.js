@@ -16,28 +16,19 @@ export const GithubProvider = ({ children }) => {
   //dispatch method is like setSomething in useState
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
-  // just for the testing..getch data from endpoint /users
-  // const fetchUsers = async () => {
-  //   setLoading();
-  //   const response = await fetch(`${GITHUB_URL}/users`, {
-  //     headers: {
-  //       Authorization: `token ${GITHUB_TOKEN}`,
-  //     },
-  //   });
-  //   const data = await response.json();
-
   //Get search results
   const searchUsers = async (text) => {
     setLoading();
 
-    const params = new URLSearchParams({
-      q: text,
-    });
-    const response = await fetch(`${GITHUB_URL}/users?${params}`, {
-      headers: {
-        Authorization: `token ${GITHUB_TOKEN}`,
-      },
-    });
+    const params = new URLSearchParams({ q: text });
+    const response = await fetch(
+      `https://api.github.com/search/users?${params}`,
+      {
+        headers: {
+          Authorization: `token ${GITHUB_TOKEN}`,
+        },
+      }
+    );
     const { items } = await response.json();
 
     //use redux
