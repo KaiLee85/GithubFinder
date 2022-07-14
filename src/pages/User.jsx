@@ -2,15 +2,18 @@ import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../components/layout/Spinner";
+// import RepoList from "../components/repos/RepoList";
 import { useParams } from "react-router-dom";
 import GithubContext from "../context/github/GithubContext.js";
 
 function User() {
-  const { getUser, user, loading } = useContext(GithubContext);
+  const { getUser, user, loading, getUserRepos, repos } =
+    useContext(GithubContext);
   const params = useParams();
 
   useEffect(() => {
     getUser(params.login);
+    getUserRepos(params.login);
   }, []);
 
   //pull out the data from user and restructur
@@ -49,7 +52,6 @@ function User() {
               <figure>
                 <img src={avatar_url} alt="" />
               </figure>
-
               <div className="card-body justify-end">
                 <h2 className="card-title mb-0">{name}</h2>
                 <p className="flex-grow-0">{login}</p>
@@ -67,17 +69,49 @@ function User() {
                 )}
               </h1>
               <p>{bio}</p>
-
               <div className="mt-4 card-actions">
                 <a
                   href={html_url}
                   target="_blank"
                   rel="noreferrer"
-                  className="btn"
+                  className="btn text-white btn-outline"
                 >
                   Visit Github Profile
                 </a>
               </div>
+            </div>
+
+            <div className="w-full rounded-lg shadow-md bg-base-100 stats">
+              {location && (
+                <div className="stat">
+                  <div className="stat-title text-md">Location</div>
+                  <div className="text-lg stat-value">{location}</div>
+                </div>
+              )}
+              {blog && (
+                <div className="stat">
+                  <div className="stat-title text-md">Website</div>
+                  <div className="text-lg stat-value">
+                    <a href="" target="_blank" rel="noreferrer">
+                      Twitter
+                    </a>
+                  </div>
+                </div>
+              )}
+              {twitter_username && (
+                <div className="stat">
+                  <div className="stat-title text-md">Twitter</div>
+                  <div className="text-lg stat-value">
+                    <a
+                      href={`https://twitter.com/${twitter_username}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {twitter_username}
+                    </a>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -125,6 +159,9 @@ function User() {
             </div>
           </div>
         </div>
+
+        {/* @@repo
+        <RepoList repos={repos} /> */}
       </div>
     </>
   );

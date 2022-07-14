@@ -13,8 +13,8 @@ function App() {
   return (
     <GithubProvider>
       <AlertProvider>
-        <Router>
-          <div className="flex flex-col justify-between h-screen bg-gray-800">
+        <div className="flex flex-col justify-between h-screen bg-gray-800">
+          <Router>
             <Navbar />
             <main className="text-white container mx-auto px-3 pb-12">
               <Alert data-theme="dark" />
@@ -27,8 +27,8 @@ function App() {
               </Routes>
             </main>
             <Footer />
-          </div>
-        </Router>
+          </Router>
+        </div>
       </AlertProvider>
     </GithubProvider>
 
